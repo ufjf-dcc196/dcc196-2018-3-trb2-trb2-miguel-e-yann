@@ -1,8 +1,12 @@
 package miguelalvim.trab1;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.LinkedList;
@@ -17,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> aaEventAdapter;
     ListView lsPeopleView;
     ListView lsEventView;
+    Button bttCadastrarPessoa,bttCadastrarEvento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         lsPeopleView = findViewById(R.id.lsListaPessoas);
         lsEventView = findViewById(R.id.lsEvents);
+        bttCadastrarEvento = findViewById(R.id.bttCadastrarEvento);
+        bttCadastrarPessoa = findViewById(R.id.bttCadastrarPessoa);
+
         aaPeopleAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, peopleNames);
         aaEventAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, eventsNames);
 
@@ -36,6 +44,20 @@ public class MainActivity extends AppCompatActivity {
         aaPeopleAdapter.notifyDataSetChanged();
         aaEventAdapter.notifyDataSetChanged();
 
+        bttCadastrarPessoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,CadastroPessoaActivity.class);
+                startActivityForResult(intent,0);//Request code 0 = cadastro de pessoa
+            }
+        });
+        bttCadastrarEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,CadastroEventoActivity.class);
+                startActivityForResult(intent,1);//Request code 1 = cadastro de evento
+            }
+        });
 
     }
 
@@ -47,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         return p;
     }
 
-    private Evento createEvent(String titulo, int dia, String hora, String facilitador, String descricao){
+    private Evento createEvent(String titulo, String dia, String hora, String facilitador, String descricao){
         Evento e = new Evento();
         e.dia = dia;
         e.descricao = descricao;
@@ -64,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         updateNamesList();
     }
     private void onStartLoadEvents(){
-        events.add(createEvent("Doing Illegal Stuff", 22, "13:00", "Ha4xorr 4A7", "You know what it means"));
+        events.add(createEvent("Doing Illegal Stuff", "22", "13:00", "Ha4xorr 4A7", "You know what it means"));
         updateNamesList();
     }
 
@@ -76,6 +98,45 @@ public class MainActivity extends AppCompatActivity {
         }
         for(int i=0;i<events.size();++i){
             eventsNames.add(events.get(i).titulo);
+        }
+    }
+    //Event Listenner
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case 0 :{//Cadastro de Pessoa
+                if (resultCode == Activity.RESULT_OK && data != null){
+                    Person p = new Person();
+                    p.cpf =data.getStringExtra("CPF");
+                    p.email =data.getStringExtra("email");
+                    p.name =data.getStringExtra("name");
+                    people.add(p);
+                    peopleNames.add(p.name);
+                    aaPeopleAdapter.notifyDataSetChanged();
+                }
+            }break;
+            case 1 :{//Cadastro de Eventos
+                if (resultCode == Activity.RESULT_OK && data != null){
+                    Evento e = new Evento();
+                    e.titulo = data.getStringExtra("titulo");
+                    e.hora = data.getStringExtra("hora");
+                    e.facilitador = data.getStringExtra("facilitador");
+                    e.descricao = data.getStringExtra("descricao");
+                    e.dia = data.getStringExtra("dia");
+
+                    events.add(e);
+                    eventsNames.add(e.titulo);
+                    aaEventAdapter.notifyDataSetChanged();
+                }
+            }break;
+            case 2 :{
+                if (resultCode == Activity.RESULT_OK && data != null){
+                    if(data.getBooleanExtra("Add", false)) {
+//                        ++totExterno;
+//                        txtExterno.setText("Servidores: " + totExterno);
+                    }
+                }
+            }break;
         }
     }
 }
