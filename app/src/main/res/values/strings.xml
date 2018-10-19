@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Trab1</string>
+    <string name="title_activity_cadastro">Cadastro</string>
 </resources>
