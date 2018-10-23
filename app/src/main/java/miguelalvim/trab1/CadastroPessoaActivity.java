@@ -14,6 +14,7 @@ public class CadastroPessoaActivity extends AppCompatActivity {
     TextView lbActivity;
     Button bttConfirm,bttCancel;
     boolean edit = false;
+    int pos =-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +32,10 @@ public class CadastroPessoaActivity extends AppCompatActivity {
         edit = extras!=null;
         if(edit){
             lbActivity.setText("Edição de Cadastro");
-            txtCPF.setText(extras.getString("CPF"));
+            txtCPF.setText(extras.getString("cpf"));
             txtName.setText(extras.getString("name"));
             txtEmail.setText(extras.getString("email"));
+            pos = extras.getInt("pos");
         }
 
         bttCancel.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +54,7 @@ public class CadastroPessoaActivity extends AppCompatActivity {
                     result.putExtra("email", txtEmail.getText().toString());
                     result.putExtra("CPF", txtCPF.getText().toString());
                     result.putExtra("name", txtName.getText().toString());
+                    result.putExtra("pos", pos);
                     setResult(RESULT_OK, result);
                     finish();
                 }else{
