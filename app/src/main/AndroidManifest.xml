@@ -19,7 +19,8 @@
         <activity android:name=".CadastroPessoaActivity" />
         <activity android:name=".CadastroEventoActivity" />
         <activity android:name=".PessoaViewActivity" />
-        <activity android:name=".CadastroPessoaEventoActivity"></activity>
+        <activity android:name=".CadastroPessoaEventoActivity" />
+        <activity android:name=".EventoViewActivity"></activity>
     </application>
 
 </manifest>

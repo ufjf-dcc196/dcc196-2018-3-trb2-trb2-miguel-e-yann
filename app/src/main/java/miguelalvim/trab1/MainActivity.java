@@ -77,7 +77,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,2);//Request code 2 = tela de checagem de pessoa
             }
         });
+        lsEventView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this,EventoViewActivity.class);
+                ArrayList<String> participants = new ArrayList<String>();
 
+                for(int i=0;i<people.size();++i){
+                    for(int j=0;j<people.get(i).eventos.size();++j) {
+                        if (people.get(i).eventos.get(j).titulo.equals(events.get(position).titulo)){
+                            participants.add(people.get(i).name);
+                        }
+                    }
+                }
+                intent.putExtra("people", participants);
+                intent.putExtra("event", events.get(position));
+
+                startActivity(intent);
+            }
+        });
     }
 
     private Person createPerson(String name, String cpf, String email){
