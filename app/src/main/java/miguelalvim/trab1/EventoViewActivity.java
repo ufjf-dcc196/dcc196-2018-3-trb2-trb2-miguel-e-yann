@@ -1,7 +1,7 @@
 package miguelalvim.trab1;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -45,7 +45,7 @@ public class EventoViewActivity extends AppCompatActivity {
             finish();
         }
 
-        aaLista = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,people);
+        aaLista = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, people);
         lvParticipantes.setAdapter(aaLista);
         aaLista.notifyDataSetChanged();
 

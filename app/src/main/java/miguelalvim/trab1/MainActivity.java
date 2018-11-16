@@ -2,8 +2,8 @@ package miguelalvim.trab1;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Person> people = new ArrayList<Person>();
-    ArrayList<String> peopleNames = new ArrayList<String>();
-    ArrayList<Evento> events = new ArrayList<Evento>();
-    ArrayList<String> eventsNames = new ArrayList<String>();
+    ArrayList<Person> people = new ArrayList<>();
+    ArrayList<String> peopleNames = new ArrayList<>();
+    ArrayList<Evento> events = new ArrayList<>();
+    ArrayList<String> eventsNames = new ArrayList<>();
     ArrayAdapter<String> aaPeopleAdapter;
     ArrayAdapter<String> aaEventAdapter;
 
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         bttCadastrarPessoa = findViewById(R.id.bttCadastrarPessoa);
 
 
-        aaPeopleAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, peopleNames);
-        aaEventAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, eventsNames);
+        aaPeopleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, peopleNames);
+        aaEventAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, eventsNames);
 
         lsPeopleView.setAdapter(aaPeopleAdapter);
         lsEventView.setAdapter(aaEventAdapter);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this,EventoViewActivity.class);
-                ArrayList<String> participants = new ArrayList<String>();
+                ArrayList<String> participants = new ArrayList<>();
 
                 for(int i=0;i<people.size();++i){
                     for(int j=0;j<people.get(i).eventos.size();++j) {
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         p.name = name;
         p.cpf = cpf;
         p.email = email;
-        p.eventos =  new ArrayList<Evento>();
+        p.eventos = new ArrayList<>();
         return p;
     }
     private Evento createEvent(String titulo, String dia, String hora, String facilitador, String descricao){

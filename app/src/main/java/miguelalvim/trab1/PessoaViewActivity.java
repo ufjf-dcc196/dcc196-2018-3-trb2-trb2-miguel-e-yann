@@ -2,8 +2,8 @@ package miguelalvim.trab1;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,9 +19,9 @@ public class PessoaViewActivity extends AppCompatActivity {
     Button bttEdit,bttSalvar,bttAdd;
     ListView lsEventos;
     ArrayAdapter<String> aaEventAdapter;
-    ArrayList<Evento> eventsP = new ArrayList<Evento>();
-    ArrayList<Evento> eventsG = new ArrayList<Evento>();
-    ArrayList<String> eventsNames = new ArrayList<String>();
+    ArrayList<Evento> eventsP = new ArrayList<>();
+    ArrayList<Evento> eventsG = new ArrayList<>();
+    ArrayList<String> eventsNames = new ArrayList<>();
     int pos=-1;
 
     @Override
@@ -54,7 +54,7 @@ public class PessoaViewActivity extends AppCompatActivity {
             finish();
         }
         lsEventos = findViewById(R.id.lsEventos);
-        aaEventAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, eventsNames);
+        aaEventAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, eventsNames);
         lsEventos.setAdapter(aaEventAdapter);
         aaEventAdapter.notifyDataSetChanged();
 
@@ -72,7 +72,7 @@ public class PessoaViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PessoaViewActivity.this,CadastroPessoaEventoActivity.class);
-                ArrayList<String> aux = new ArrayList<String>();
+                ArrayList<String> aux = new ArrayList<>();
                 for(int i=0;i<eventsG.size();++i)
                     aux.add(eventsG.get(i).titulo);
                 intent.putExtra("eventosG",aux);

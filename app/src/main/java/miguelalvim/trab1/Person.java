@@ -8,5 +8,4 @@ public class Person{
     public String email;
 
     public ArrayList<Evento> eventos;
-
 }
