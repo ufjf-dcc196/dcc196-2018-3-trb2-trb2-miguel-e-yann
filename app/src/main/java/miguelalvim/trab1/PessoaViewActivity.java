@@ -2,8 +2,11 @@ package miguelalvim.trab1;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,8 +25,11 @@ public class PessoaViewActivity extends AppCompatActivity {
     ArrayList<Evento> eventsP = new ArrayList<>();
     ArrayList<Evento> eventsG = new ArrayList<>();
     ArrayList<String> eventsNames = new ArrayList<>();
+    ArrayList<Integer> eventsIds = new ArrayList<>();
     int pos=-1;
 
+    DBHandler bdHandler;
+    SQLiteDatabase bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,24 +45,27 @@ public class PessoaViewActivity extends AppCompatActivity {
         txtName.setEnabled(false);
         txtEmail.setEnabled(false);
 
+        eventsIds = new ArrayList<>();
+        eventsNames = new ArrayList<>();
+
+        bdHandler = new DBHandler(getApplicationContext());
+        bd = bdHandler.getReadableDatabase();
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
-            txtName.setText(extras.getString("name"));
-            txtCPF.setText(extras.getString("cpf"));
-            txtEmail.setText(extras.getString("email"));
-            pos = extras.getInt("pos");
-            eventsP = extras.getParcelableArrayList("eventosP");
-            eventsG = extras.getParcelableArrayList("eventosG");
-            for(int i = 0; i< eventsP.size(); ++i){
-                eventsNames.add(eventsP.get(i).titulo);
-            }
+            Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id="+extras.getInt("id",-1), null);
+            c.moveToFirst();
+            txtName.setText(c.getString(c.getColumnIndex("name")));
+            txtCPF.setText(c.getString(c.getColumnIndex("cpf")));
+            txtEmail.setText(c.getString(c.getColumnIndex("email")));
         }else{
             finish();
         }
+
         lsEventos = findViewById(R.id.lsEventos);
         aaEventAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, eventsNames);
         lsEventos.setAdapter(aaEventAdapter);
         aaEventAdapter.notifyDataSetChanged();
+        updateEventList();
 
         bttEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +74,7 @@ public class PessoaViewActivity extends AppCompatActivity {
                 intent.putExtra("cpf", txtCPF.getText().toString());
                 intent.putExtra("name", txtName.getText().toString());
                 intent.putExtra("email", txtEmail.getText().toString());
+                intent.putExtra("id", getIntent().getExtras().getInt("id",-1));
                 startActivityForResult(intent,0);//Request code 0 = Modificacao de pessoa
             }
         });
@@ -76,6 +86,7 @@ public class PessoaViewActivity extends AppCompatActivity {
                 for(int i=0;i<eventsG.size();++i)
                     aux.add(eventsG.get(i).titulo);
                 intent.putExtra("eventosG",aux);
+                intent.putExtra("id",getIntent().getExtras().getInt("id",-1));
                 startActivityForResult(intent,1);//Request code 1 = Adicao de evento
             }
         });
@@ -101,10 +112,9 @@ public class PessoaViewActivity extends AppCompatActivity {
         lsEventos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                eventsP.remove(position);
-                eventsNames.remove(position);
-                aaEventAdapter.notifyDataSetChanged();
-
+                bd.delete("pessoaevento", "id_evento="+eventsIds.get(position)+
+                        " AND id_pessoa="+getIntent().getExtras().getInt("id",-1), null);
+                updateEventList();
                 return false;
             }
         });
@@ -113,27 +123,35 @@ public class PessoaViewActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case 0 :{//Modificação de Pessoa
-                if (resultCode == Activity.RESULT_OK && data != null){
-                    Person p = new Person();
-                    p.cpf = data.getStringExtra("CPF");
-                    p.email = data.getStringExtra("email");
-                    p.name = data.getStringExtra("name");
-
-                    txtName.setText(data.getStringExtra("name"));
-                    txtEmail.setText(data.getStringExtra("email"));
-                    txtCPF.setText(data.getStringExtra("CPF"));
+                if (resultCode == Activity.RESULT_OK){
+                    Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id="+getIntent().getExtras().getInt("id",-1), null);
+                    c.moveToFirst();
+                    txtName.setText(c.getString(c.getColumnIndex("name")));
+                    txtCPF.setText(c.getString(c.getColumnIndex("cpf")));
+                    txtEmail.setText(c.getString(c.getColumnIndex("email")));
                 }
             }break;
             case 1 :{//Adicao de Evento
-                if (resultCode == Activity.RESULT_OK && data != null){
-                    int position = data.getIntExtra("pos", 0);
-                    if(!eventsP.contains(eventsG.get(position))) {
-                        eventsP.add(eventsG.get(position));
-                        eventsNames.add(eventsG.get(position).titulo);
-                        aaEventAdapter.notifyDataSetChanged();
-                    }
+                if (resultCode == Activity.RESULT_OK){
+                    updateEventList();
                 }
             }break;
         }
+    }
+    void updateEventList(){
+        eventsNames.clear();
+        eventsIds.clear();
+        int pessoaID =getIntent().getExtras().getInt("id",-1);
+        Cursor c = bd.rawQuery("SELECT evp.id_evento,ev.titulo FROM evento ev, pessoa p, pessoaevento evp " +
+                                    "WHERE ev.id=evp.id_evento AND p.id = evp.id_pessoa AND p.id="+pessoaID, null);
+        if (c!=null && c.moveToFirst()){
+            do {
+                int id = Integer.parseInt(c.getString(c.getColumnIndex("id_evento")));
+                String titulo = c.getString(c.getColumnIndex("titulo"));
+                eventsNames.add(titulo);
+                eventsIds.add(id);
+            } while(c.moveToNext());
+        }
+        aaEventAdapter.notifyDataSetChanged();
     }
 }

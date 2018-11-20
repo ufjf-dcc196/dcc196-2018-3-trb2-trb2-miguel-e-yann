@@ -1,6 +1,8 @@
 package miguelalvim.trab1;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,9 @@ public class CadastroEventoActivity extends AppCompatActivity {
     TextView lbActivity;
     boolean edit = false;
 
+    DBHandler bdHandler;
+    SQLiteDatabase bd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,9 @@ public class CadastroEventoActivity extends AppCompatActivity {
         lbActivity = findViewById(R.id.lbActivity);
         bttConfirm = findViewById(R.id.bttConfirm);
         bttCancel = findViewById(R.id.bttCancel);
+
+        bdHandler = new DBHandler(getApplicationContext());
+        bd = bdHandler.getReadableDatabase();
 
         Bundle extras = getIntent().getExtras();
         edit = extras!=null;
@@ -54,12 +62,22 @@ public class CadastroEventoActivity extends AppCompatActivity {
                         !txtHora.getText().toString().isEmpty() &&
                         !txtFacilitador.getText().toString().isEmpty() &&
                         !txtTitulo.getText().toString().isEmpty()) {
+
+
+                    //inserting into database
                     Intent result = new Intent();
-                    result.putExtra("dia", txtDia.getText().toString());
-                    result.putExtra("descricao", txtDescricao.getText().toString());
-                    result.putExtra("titulo", txtTitulo.getText().toString());
-                    result.putExtra("hora", txtHora.getText().toString());
-                    result.putExtra("facilitador", txtFacilitador.getText().toString());
+                    ContentValues vals = new ContentValues();
+                    vals.put("dia", txtDia.getText().toString());
+                    vals.put("descricao", txtDescricao.getText().toString());
+                    vals.put("titulo", txtTitulo.getText().toString());
+                    vals.put("hora", txtHora.getText().toString());
+                    vals.put("facilitador", txtFacilitador.getText().toString());
+                    long id = bd.insert("evento", null, vals);
+                    if(id==-1) {
+                        Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar os dados",  Toast.LENGTH_SHORT).show();
+                    }else{
+                        result.putExtra("id", (int)id);
+                    }
                     setResult(RESULT_OK, result);
                     finish();
                 }else{

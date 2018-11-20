@@ -6,5 +6,6 @@ class Person {
     String name;
     String cpf;
     String email;
+    int id;
     ArrayList<Evento> eventos;
 }

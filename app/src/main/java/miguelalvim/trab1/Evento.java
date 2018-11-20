@@ -9,6 +9,7 @@ public class Evento implements Parcelable{
     String hora;
     String facilitador;
     String descricao;
+    int id;
 
     private Evento(Parcel in) {
         titulo = in.readString();
@@ -16,6 +17,7 @@ public class Evento implements Parcelable{
         hora = in.readString();
         facilitador = in.readString();
         descricao = in.readString();
+        id = in.readInt();
     }
 
     Evento() {
@@ -45,5 +47,6 @@ public class Evento implements Parcelable{
         dest.writeString(this.hora);
         dest.writeString(this.facilitador);
         dest.writeString(this.descricao);
+        dest.writeInt(this.id);
     }
 }
