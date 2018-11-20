@@ -1,5 +1,6 @@
 package miguelalvim.trab1;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,7 +38,7 @@ public class CadastroPessoaEventoActivity extends AppCompatActivity {
         ls = findViewById(R.id.lvList);
 
         personID = getIntent().getExtras().getInt("id",-1);
-        Cursor c = bd.rawQuery("SELECT e.id,e.titulo FROM evento e WHERE NOT EXISTS " +
+        @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT e.id,e.titulo FROM evento e WHERE NOT EXISTS " +
                                    "(SELECT * FROM pessoa p,pessoaevento pe WHERE e.id=pe.id_evento AND p.id=pe.id_pessoa AND p.id="+personID+")", null);
         if (c.moveToFirst()){
             do {

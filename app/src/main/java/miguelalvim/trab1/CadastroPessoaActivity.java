@@ -1,11 +1,12 @@
 package miguelalvim.trab1;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +19,13 @@ public class CadastroPessoaActivity extends AppCompatActivity {
     TextView lbActivity;
     Button bttConfirm,bttCancel;
     boolean edit = false;
-    int pos =-1,id_=-1;
+    int id_ = -1;
 
 
     DBHandler bdHandler;
     SQLiteDatabase bd;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +45,11 @@ public class CadastroPessoaActivity extends AppCompatActivity {
         edit = extras!=null;
         if(edit){
             lbActivity.setText("Edição de Cadastro");
-                    Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id="+extras.getInt("id",-1), null);
-                    c.moveToFirst();
-                    txtName.setText(c.getString(c.getColumnIndex("name")));
-                    txtCPF.setText(c.getString(c.getColumnIndex("cpf")));
-                    txtEmail.setText(c.getString(c.getColumnIndex("email")));
-
-//            txtCPF.setText(extras.getString("cpf"));
-//            txtName.setText(extras.getString("name"));
-//            txtEmail.setText(extras.getString("email"));
-//            pos = extras.getInt("pos");
+            @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id=" + extras.getInt("id", -1), null);
+            c.moveToFirst();
+            txtName.setText(c.getString(c.getColumnIndex("name")));
+            txtCPF.setText(c.getString(c.getColumnIndex("cpf")));
+            txtEmail.setText(c.getString(c.getColumnIndex("email")));
             id_ = extras.getInt("id");
         }
 

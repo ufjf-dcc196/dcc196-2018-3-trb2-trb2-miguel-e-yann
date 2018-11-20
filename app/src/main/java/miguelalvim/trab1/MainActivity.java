@@ -1,5 +1,6 @@
 package miguelalvim.trab1;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -121,13 +122,15 @@ public class MainActivity extends AppCompatActivity {
         e.id = id;
         return e;
     }
+
+    @SuppressLint("Recycle")
     private void updateNamesList(){
         peopleNames.clear();
         people.clear();
         eventsNames.clear();
         events.clear();
 
-        Cursor c = bd.rawQuery("SELECT * FROM pessoa ", null);
+        @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT * FROM pessoa ", null);
         if (c.moveToFirst()){
             do {
                 int id = Integer.parseInt(c.getString(c.getColumnIndex("id")));

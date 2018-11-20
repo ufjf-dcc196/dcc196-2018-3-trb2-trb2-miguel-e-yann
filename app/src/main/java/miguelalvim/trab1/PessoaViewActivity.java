@@ -1,12 +1,12 @@
 package miguelalvim.trab1;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,7 +52,7 @@ public class PessoaViewActivity extends AppCompatActivity {
         bd = bdHandler.getReadableDatabase();
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
-            Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id="+extras.getInt("id",-1), null);
+            @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id=" + extras.getInt("id", -1), null);
             c.moveToFirst();
             txtName.setText(c.getString(c.getColumnIndex("name")));
             txtCPF.setText(c.getString(c.getColumnIndex("cpf")));
@@ -124,7 +124,7 @@ public class PessoaViewActivity extends AppCompatActivity {
         switch(requestCode) {
             case 0 :{//Modificação de Pessoa
                 if (resultCode == Activity.RESULT_OK){
-                    Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id="+getIntent().getExtras().getInt("id",-1), null);
+                    @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT name,cpf,email FROM pessoa WHERE id=" + getIntent().getExtras().getInt("id", -1), null);
                     c.moveToFirst();
                     txtName.setText(c.getString(c.getColumnIndex("name")));
                     txtCPF.setText(c.getString(c.getColumnIndex("cpf")));
@@ -142,7 +142,7 @@ public class PessoaViewActivity extends AppCompatActivity {
         eventsNames.clear();
         eventsIds.clear();
         int pessoaID =getIntent().getExtras().getInt("id",-1);
-        Cursor c = bd.rawQuery("SELECT evp.id_evento,ev.titulo FROM evento ev, pessoa p, pessoaevento evp " +
+        @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT evp.id_evento,ev.titulo FROM evento ev, pessoa p, pessoaevento evp " +
                                     "WHERE ev.id=evp.id_evento AND p.id = evp.id_pessoa AND p.id="+pessoaID, null);
         if (c!=null && c.moveToFirst()){
             do {
