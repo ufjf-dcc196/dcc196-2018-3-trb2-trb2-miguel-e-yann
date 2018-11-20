@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">Trab1</string>
     <string name="title_activity_cadastro">Cadastro</string>
+    <string name="titulo">Titulo</string>
+    <string name="dia">Dia</string>
+    <string name="hora">Hora</string>
+    <string name="facilitador">Facilitador</string>
+    <string name="descricao">Descricao</string>
+    <string name="participantes">Participantes</string>
+    <string name="cadastrar_participante">Cadastrar Participante</string>
+    <string name="cadastrar_evento">Cadastrar Evento</string>
+    <string name="nome">Nome</string>
+    <string name="cpf">CPF</string>
+    <string name="email">Email</string>
+    <string name="eventos_a_participar">Eventos a participar</string>
+    <string name="salvar_altera_es">Salvar Alterações</string>
+    <string name="adicionar_evento">Adicionar Evento</string>
+    <string name="editar">Editar</string>
+    <string name="um_clique_longo_sobre_o_evento_realizara_o_cadastro">Um Clique longo sobre o evento realizara o cadastro</string>
+    <string name="precione_a_teclade_retornar_para_sair">Precione a teclade retornar para sair</string>
 </resources>

@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Evento implements Parcelable{
-    public String titulo;
-    public String dia;
-    public String hora;
-    public String facilitador;
-    public String descricao;
+    String titulo;
+    String dia;
+    String hora;
+    String facilitador;
+    String descricao;
 
-    protected Evento(Parcel in) {
+    private Evento(Parcel in) {
         titulo = in.readString();
         dia = in.readString();
         hora = in.readString();
@@ -18,7 +18,8 @@ public class Evento implements Parcelable{
         descricao = in.readString();
     }
 
-    public Evento(){};
+    Evento() {
+    }
 
     public static final Creator<Evento> CREATOR = new Creator<Evento>() {
         @Override

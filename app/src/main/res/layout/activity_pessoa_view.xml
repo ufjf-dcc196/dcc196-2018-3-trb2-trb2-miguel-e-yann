@@ -15,7 +15,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
-        android:text="Nome"
+        android:text="@string/nome"
         app:layout_constraintEnd_toStartOf="@+id/txtNome"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="58dp"
-        android:text="CPF"
+        android:text="@string/cpf"
         app:layout_constraintEnd_toStartOf="@+id/txtCPF"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="56dp"
-        android:text="Email"
+        android:text="@string/email"
         app:layout_constraintEnd_toStartOf="@+id/txtemail"
         app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
         android:layout_marginLeft="55dp"
         android:layout_marginStart="55dp"
         android:layout_marginTop="8dp"
-        android:text="Eventos a participar"
+        android:text="@string/eventos_a_participar"
         app:layout_constraintBottom_toTopOf="@+id/lsEventos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bttSalvar" />
@@ -124,7 +124,7 @@
         android:layout_marginEnd="76dp"
         android:layout_marginRight="76dp"
         android:layout_marginTop="36dp"
-        android:text="Salvar Alterações"
+        android:text="@string/salvar_altera_es"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtemail" />
 
@@ -137,7 +137,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="28dp"
         android:layout_marginStart="8dp"
-        android:text="Adicionar Evento"
+        android:text="@string/adicionar_evento"
         app:layout_constraintBottom_toTopOf="@+id/lsEventos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lbEventos" />
@@ -151,7 +151,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
-        android:text="Editar"
+        android:text="@string/editar"
         app:layout_constraintEnd_toStartOf="@+id/bttSalvar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtemail" />
