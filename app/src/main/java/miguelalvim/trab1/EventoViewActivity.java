@@ -61,7 +61,6 @@ public class EventoViewActivity extends AppCompatActivity {
 
     void updatePersonList() {
         people.clear();
-        ArrayList<Integer> personIds = new ArrayList<>();
         int eventoID = getIntent().getExtras().getInt("event", -1);
         @SuppressLint("Recycle") Cursor c = bd.rawQuery("SELECT p.name FROM evento ev, pessoa p, pessoaevento evp " +
                 "WHERE ev.id=evp.id_evento AND p.id = evp.id_pessoa AND ev.id=" + eventoID, null);

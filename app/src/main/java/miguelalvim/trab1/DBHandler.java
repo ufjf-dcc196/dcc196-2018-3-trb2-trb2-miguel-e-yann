@@ -30,8 +30,6 @@ public class DBHandler extends SQLiteOpenHelper {
                         "FOREIGN KEY(id_evento) REFERENCES evento(id)," +
                         "PRIMARY KEY(id_pessoa, id_evento))"
         );
-        //Populate for DEBUG
-        //db.rawQuery("INSERT INTO pessoa values('Miguel Alvim','12312312312','nope@nopes.n')",null);
     }
 
     @Override

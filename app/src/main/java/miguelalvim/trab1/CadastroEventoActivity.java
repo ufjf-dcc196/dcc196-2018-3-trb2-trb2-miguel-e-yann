@@ -3,8 +3,8 @@ package miguelalvim.trab1;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +15,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
     Button bttConfirm,bttCancel;
     EditText txtDia,txtDescricao,txtTitulo,txtHora,txtFacilitador;
     TextView lbActivity;
-    boolean edit = false;
 
     DBHandler bdHandler;
     SQLiteDatabase bd;
@@ -37,17 +36,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
         bdHandler = new DBHandler(getApplicationContext());
         bd = bdHandler.getReadableDatabase();
 
-        Bundle extras = getIntent().getExtras();
-        edit = extras!=null;
-        if(edit){
-            lbActivity.setText("Edição de Cadastro");
-            txtDia.setText(extras.getString("dia"));
-            txtDescricao.setText(extras.getString("descricao"));
-            txtTitulo.setText(extras.getString("titulo"));
-            txtHora.setText(extras.getString("hora"));
-            txtFacilitador.setText(extras.getString("facilitador"));
-        }
-
         bttCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +50,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
                         !txtHora.getText().toString().isEmpty() &&
                         !txtFacilitador.getText().toString().isEmpty() &&
                         !txtTitulo.getText().toString().isEmpty()) {
-
 
                     //inserting into database
                     Intent result = new Intent();
