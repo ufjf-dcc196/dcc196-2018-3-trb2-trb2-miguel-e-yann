@@ -49,7 +49,6 @@ public class CadastroPessoaEventoActivity extends AppCompatActivity {
             } while(c.moveToNext());
         }
 
-
         aaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, eventNames);
         ls.setAdapter(aaAdapter);
         aaAdapter.notifyDataSetChanged();
