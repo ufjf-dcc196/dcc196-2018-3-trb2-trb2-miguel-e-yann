@@ -45,9 +45,6 @@ public class PessoaViewActivity extends AppCompatActivity {
         txtName.setEnabled(false);
         txtEmail.setEnabled(false);
 
-        eventsIds = new ArrayList<>();
-        eventsNames = new ArrayList<>();
-
         bdHandler = new DBHandler(getApplicationContext());
         bd = bdHandler.getReadableDatabase();
         Bundle extras = getIntent().getExtras();

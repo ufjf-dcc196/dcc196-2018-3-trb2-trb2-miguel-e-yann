@@ -20,7 +20,7 @@ public class CadastroPessoaEventoActivity extends AppCompatActivity {
     ArrayList<String> eventNames;
     ArrayList<Integer> eventIds;
     ArrayAdapter aaAdapter;
-    int personID =-1;
+    int personID;
 
     DBHandler bdHandler;
     SQLiteDatabase bd;

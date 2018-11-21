@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 intent.putExtra("people", participants);
-                intent.putExtra("event", events.get(position));
+                intent.putExtra("event", events.get(position).id);
 
                 startActivity(intent);
             }
