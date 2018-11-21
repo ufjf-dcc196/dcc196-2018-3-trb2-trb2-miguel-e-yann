@@ -86,18 +86,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this,EventoViewActivity.class);
-                ArrayList<String> participants = new ArrayList<>();
-
-                for(int i=0;i<people.size();++i){
-                    for(int j=0;j<people.get(i).eventos.size();++j) {
-                        if (people.get(i).eventos.get(j).titulo.equals(events.get(position).titulo)){
-                            participants.add(people.get(i).name);
-                        }
-                    }
-                }
-                intent.putExtra("people", participants);
                 intent.putExtra("event", events.get(position).id);
-
                 startActivity(intent);
             }
         });
